@@ -43,7 +43,7 @@ load_images :: proc(
 
 player_action :: proc(p: ^Player, timer: int) {
 
-	if k2.key_is_held(.Right) && p.x < 1250 {
+	if k2.key_is_held(.Right) && p.x < 1250 && p.onground {
 
 		if k2.key_is_held(.R) {
 			p.x += 3
@@ -56,7 +56,7 @@ player_action :: proc(p: ^Player, timer: int) {
 			}
 		} else {p.animation_frame = 0}
 	}
-	if k2.key_is_held(.Left) && p.x > 10 {
+	if k2.key_is_held(.Left) && p.x > 10 && p.onground {
 		if k2.key_is_held(.R) {
 			p.x -= 3
 			p.action = "run left"
@@ -71,20 +71,24 @@ player_action :: proc(p: ^Player, timer: int) {
 		} else {p.animation_frame = 9}
 	}
 	if k2.key_is_held(.Up) {
-		p.y -= 3
+		if p.onground {
+			p.y -= 100
+			p.x += 1
+		}
+
 		if p.forward {
 			p.action = "jump"
-			if p.animation_frame < 9 {
-				if timer % 5 == 0 {
+			if p.animation_frame < 3 {
+				if timer % 4 == 0 {
 					p.animation_frame += 1
 				}
 			} else {p.animation_frame = 0}
 		} else {p.action = "jump left"
 			if p.animation_frame > 0 {
-				if timer % 5 == 0 {
+				if timer % 4 == 0 {
 					p.animation_frame -= 1
 				}
-			} else {p.animation_frame = 9}
+			} else {p.animation_frame = 3}
 
 		}
 

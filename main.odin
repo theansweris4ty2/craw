@@ -21,8 +21,9 @@ main :: proc() {
 		player.y += gravity
 		if player.y < 524 {
 			gravity = 1
+			player.onground = false
 			if player.forward {player.texture = jump} else {player.texture = jump_left}
-		} else {gravity = 0
+		} else {gravity = 0;player.onground = true
 			if player.forward {player.texture = walk} else {player.texture = walk_left}
 		}
 
