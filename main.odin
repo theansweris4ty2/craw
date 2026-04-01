@@ -6,10 +6,10 @@ import k2 "vendor:karl2d"
 main :: proc() {
 
 	timer := 0
-	k2.init(1230, 950, "Crawling Chaos")
-	walk, walk_left, attack, attack_left, jump, jump_left, run, run_left, background, middleground, street_lamp, crate_stack :=
+	k2.init(1230, 600, "Crawling Chaos")
+	walk, walk_left, attack, attack_left, jump, jump_left, run, run_left, background, middleground, street_lamp, crate_stack, house_a :=
 		load_images()
-	player := Player{walk, 0, 524, 128, 128, 0, 0, 0, true, true, "walk"}
+	player := Player{walk, 0, 400, 128, 128, 0, 0, 0, true, true, "walk"}
 	defer k2.shutdown()
 	sceneX: f32 = 0
 	sceneY: f32 = 0
@@ -19,7 +19,7 @@ main :: proc() {
 	for k2.update() {
 		player_action(&player, timer)
 		player.y += gravity
-		if player.y < 524 {
+		if player.y < 400 {
 			gravity = 1
 			player.onground = false
 			if player.forward {player.texture = jump} else {player.texture = jump_left}
@@ -27,18 +27,25 @@ main :: proc() {
 			if player.forward {player.texture = walk} else {player.texture = walk_left}
 		}
 
-		camera := k2.Camera{{player.x, 0}, {0, 0}, 0, 1}
+		camera := k2.Camera{{player.x, 0}, {0, 0}, 0, 1.15}
 		k2.set_camera(camera)
 		k2.clear(k2.BLUE)
 		k2.draw_texture(background, {sceneX, sceneY})
 		k2.draw_texture(middleground, {sceneX, sceneY})
-		k2.draw_texture(street_lamp, {300, 425})
-		k2.draw_texture(background, {(sceneX + 1200), 0})
-		k2.draw_texture(middleground, {(sceneX + 1200), 0})
-		k2.draw_texture(street_lamp, {900, 425})
-		k2.draw_texture(street_lamp, {1500, 425})
-		k2.draw_texture(street_lamp, {2100, 425})
-		k2.draw_texture(crate_stack, {400, 690})
+		// k2.draw_texture(street_lamp, {300, 425})
+		k2.draw_texture(background, {(sceneX + 533), 0})
+		k2.draw_texture(middleground, {(sceneX + 533), 0})
+		k2.draw_texture(background, {(sceneX + 1066), 0})
+		k2.draw_texture(middleground, {(sceneX + 1066), 0})
+		k2.draw_texture(background, {(sceneX + 1599), 0})
+		k2.draw_texture(middleground, {(sceneX + 1599), 0})
+		k2.draw_texture(background, {(sceneX + 2132), 0})
+		k2.draw_texture(middleground, {(sceneX + 2132), 0})
+		// k2.draw_texture(street_lamp, {900, 425})
+		// k2.draw_texture(street_lamp, {1500, 425})
+		// k2.draw_texture(street_lamp, {2100, 425})
+		// k2.draw_texture(crate_stack, {400, 690})
+		k2.draw_texture(house_a, {300, 300})
 
 
 		switch (player.action) {
@@ -61,7 +68,7 @@ main :: proc() {
 		}
 		k2.draw_texture_rect(
 			player.texture,
-			{f32(player.animation_frame * 256), 0, 256, 256},
+			{f32(player.animation_frame * 128), 0, 128, 128},
 			{player.x, player.y},
 			k2.WHITE,
 		)
@@ -81,6 +88,7 @@ main :: proc() {
 	k2.destroy_texture(middleground)
 	k2.destroy_texture(street_lamp)
 	k2.destroy_texture(crate_stack)
+	k2.destroy_texture(house_a)
 
 
 }

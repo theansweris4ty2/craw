@@ -17,6 +17,7 @@ load_images :: proc(
 	k2.Texture,
 	k2.Texture,
 	k2.Texture,
+	k2.Texture,
 ) {
 
 	walk: k2.Texture = k2.load_texture_from_bytes(#load("./assets/Walk.png"))
@@ -27,10 +28,11 @@ load_images :: proc(
 	jump_left: k2.Texture = k2.load_texture_from_bytes(#load("./assets/jump_left.png"))
 	run: k2.Texture = k2.load_texture_from_bytes(#load("./assets/run.png"))
 	run_left: k2.Texture = k2.load_texture_from_bytes(#load("./assets/run_left.png"))
-	background: k2.Texture = k2.load_texture_from_bytes(#load("./assets/background.png"))
-	middleground: k2.Texture = k2.load_texture_from_bytes(#load("./assets/middleground.png"))
+	background: k2.Texture = k2.load_texture_from_bytes(#load("./assets/background2.png"))
+	middleground: k2.Texture = k2.load_texture_from_bytes(#load("./assets/middleground2.png"))
 	street_lamp: k2.Texture = k2.load_texture_from_bytes(#load("./assets/street-lamp.png"))
 	crate_stack: k2.Texture = k2.load_texture_from_bytes(#load("./assets/crate-stack.png"))
+	house_a: k2.Texture = k2.load_texture_from_bytes(#load("./assets/house-c.png"))
 
 
 	return walk,
@@ -44,7 +46,8 @@ load_images :: proc(
 		background,
 		middleground,
 		street_lamp,
-		crate_stack
+		crate_stack,
+		house_a
 }
 
 player_action :: proc(p: ^Player, timer: int) {
