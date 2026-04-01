@@ -15,6 +15,8 @@ load_images :: proc(
 	k2.Texture,
 	k2.Texture,
 	k2.Texture,
+	k2.Texture,
+	k2.Texture,
 ) {
 
 	walk: k2.Texture = k2.load_texture_from_bytes(#load("./assets/Walk.png"))
@@ -27,6 +29,8 @@ load_images :: proc(
 	run_left: k2.Texture = k2.load_texture_from_bytes(#load("./assets/run_left.png"))
 	background: k2.Texture = k2.load_texture_from_bytes(#load("./assets/background.png"))
 	middleground: k2.Texture = k2.load_texture_from_bytes(#load("./assets/middleground.png"))
+	street_lamp: k2.Texture = k2.load_texture_from_bytes(#load("./assets/street-lamp.png"))
+	crate_stack: k2.Texture = k2.load_texture_from_bytes(#load("./assets/crate-stack.png"))
 
 
 	return walk,
@@ -38,7 +42,9 @@ load_images :: proc(
 		run,
 		run_left,
 		background,
-		middleground
+		middleground,
+		street_lamp,
+		crate_stack
 }
 
 player_action :: proc(p: ^Player, timer: int) {
@@ -73,22 +79,24 @@ player_action :: proc(p: ^Player, timer: int) {
 	if k2.key_is_held(.Up) {
 		if p.onground {
 			p.y -= 100
-			p.x += 1
+
 		}
 
 		if p.forward {
 			p.action = "jump"
-			if p.animation_frame < 3 {
-				if timer % 4 == 0 {
+			if p.x < 1245 {p.x += 3}
+			if p.animation_frame < 9 {
+				if timer % 2 == 0 {
 					p.animation_frame += 1
 				}
 			} else {p.animation_frame = 0}
 		} else {p.action = "jump left"
+			if p.x > 10 {p.x -= 3}
 			if p.animation_frame > 0 {
-				if timer % 4 == 0 {
+				if timer % 2 == 0 {
 					p.animation_frame -= 1
 				}
-			} else {p.animation_frame = 3}
+			} else {p.animation_frame = 9}
 
 		}
 

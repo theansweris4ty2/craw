@@ -2,3 +2,4 @@
 *.exe
 *.history
 .env
+.lua
