@@ -18,6 +18,9 @@ load_images :: proc(
 	k2.Texture,
 	k2.Texture,
 	k2.Texture,
+	k2.Texture,
+	k2.Texture,
+	k2.Texture,
 ) {
 
 	walk: k2.Texture = k2.load_texture_from_bytes(#load("./assets/Walk.png"))
@@ -30,9 +33,12 @@ load_images :: proc(
 	run_left: k2.Texture = k2.load_texture_from_bytes(#load("./assets/run_left.png"))
 	background: k2.Texture = k2.load_texture_from_bytes(#load("./assets/background2.png"))
 	middleground: k2.Texture = k2.load_texture_from_bytes(#load("./assets/middleground2.png"))
-	street_lamp: k2.Texture = k2.load_texture_from_bytes(#load("./assets/street-lamp.png"))
+	house_a: k2.Texture = k2.load_texture_from_bytes(#load("./assets/house-a.png"))
+	house_b: k2.Texture = k2.load_texture_from_bytes(#load("./assets/house-b.png"))
 	crate_stack: k2.Texture = k2.load_texture_from_bytes(#load("./assets/crate-stack.png"))
-	house_a: k2.Texture = k2.load_texture_from_bytes(#load("./assets/house-c.png"))
+	house_c: k2.Texture = k2.load_texture_from_bytes(#load("./assets/house-c.png"))
+	wagon: k2.Texture = k2.load_texture_from_bytes(#load("./assets/wagon.png"))
+	church: k2.Texture = k2.load_texture_from_bytes(#load("./assets/church-preview-big.png"))
 
 
 	return walk,
@@ -45,14 +51,17 @@ load_images :: proc(
 		run_left,
 		background,
 		middleground,
-		street_lamp,
+		house_a,
+		house_b,
 		crate_stack,
-		house_a
+		house_c,
+		wagon,
+		church
 }
 
 player_action :: proc(p: ^Player, timer: int) {
 
-	if k2.key_is_held(.Right) && p.x < 1250 && p.onground {
+	if k2.key_is_held(.Right) && p.x < 2570 && p.onground {
 
 		if k2.key_is_held(.R) {
 			p.x += 3
@@ -65,7 +74,7 @@ player_action :: proc(p: ^Player, timer: int) {
 			}
 		} else {p.animation_frame = 0}
 	}
-	if k2.key_is_held(.Left) && p.x > 10 && p.onground {
+	if k2.key_is_held(.Left) && p.x > -450 && p.onground {
 		if k2.key_is_held(.R) {
 			p.x -= 3
 			p.action = "run left"
@@ -87,7 +96,7 @@ player_action :: proc(p: ^Player, timer: int) {
 
 		if p.forward {
 			p.action = "jump"
-			if p.x < 1245 {p.x += 3}
+			if p.x < 2570 {p.x += 3}
 			if p.animation_frame < 9 {
 				if timer % 2 == 0 {
 					p.animation_frame += 1
